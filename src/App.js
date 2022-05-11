@@ -11,7 +11,7 @@ import Review from './Pages/Review/Review';
 
 function App() {
   return (
-    <div>
+    <div className='max-w-7xl mx-auto px-4'>
       <Navbar></Navbar>
       <Routes>
         <Route path='/' element={<Home></Home>}></Route>
