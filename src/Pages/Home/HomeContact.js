@@ -12,9 +12,9 @@ const HomeContact = () => {
                 <h3 className='text-white text-2xl'>Stay connected with us</h3>
             </div>
             <div className='flex flex-col justify-center items-center'>
-                <input type="text" placeholder="Email Address" class="input w-11/12 max-w-xs mb-5" />
-                <input type="text" placeholder="Subject" class="input w-11/12 max-w-xs mb-5" />
-                <textarea type="text" placeholder="Type here" class="textarea input-bordered input-lg w-11/12 max-w-xs mb-5" />
+                <input type="text" placeholder="Email Address" className="input w-11/12 max-w-xs mb-5" />
+                <input type="text" placeholder="Subject" className="input w-11/12 max-w-xs mb-5" />
+                <textarea type="text" placeholder="Type here" className="textarea input-bordered input-lg w-11/12 max-w-xs mb-5" />
                 <PrimaryButton>Submit</PrimaryButton>
             </div>
         </section>
