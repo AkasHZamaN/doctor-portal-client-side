@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
     useCreateUserWithEmailAndPassword,
   useSignInWithGoogle,
@@ -8,14 +8,24 @@ import auth from "../../firebase.init";
 import { useForm } from "react-hook-form";
 import Loading from "../Shared/Loading";
 import { Link, useNavigate } from "react-router-dom";
+// import { sendEmailVerification } from 'firebase/auth';
 
 const SignUP = () => {
     const {register,formState: { errors },handleSubmit,} = useForm();
   const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
+
   const [createUserWithEmailAndPassword, user, loading, error] =
-    useCreateUserWithEmailAndPassword(auth);
+    useCreateUserWithEmailAndPassword(auth,  { sendEmailVerification: true });
+
   const [updateProfile, updating, updateError] = useUpdateProfile(auth); 
   const navigate = useNavigate(); 
+
+  useEffect( ()=>{
+    if (gUser || user) {
+      console.log("google sign in: ", user, gUser);
+      navigate('/appointment')
+    }
+  },[gUser, user, navigate])
 
   if (loading || gLoading || updating) {
     return <Loading></Loading>;
@@ -30,10 +40,7 @@ const SignUP = () => {
     );
   }
 
-  if (gUser || user) {
-    console.log("google sign in: ", user, gUser);
-    navigate('/appointment')
-  }
+  
   const onSubmit = async(data) => {
     // console.log(data);
     await createUserWithEmailAndPassword(data.email, data.password);
@@ -53,7 +60,7 @@ const SignUP = () => {
               <input
                 type="text"
                 placeholder="Your Name"
-                className="input input-bordered w-full max-w-xs"
+                className="input input-bordered input-secondary w-full max-w-xs"
                 {...register("name", {
                   required: {
                     value: true,
@@ -77,7 +84,7 @@ const SignUP = () => {
               <input
                 type="email"
                 placeholder="Your Email"
-                className="input input-bordered w-full max-w-xs"
+                className="input input-bordered input-secondary w-full max-w-xs"
                 {...register("email", {
                   required: {
                     value: true,
@@ -110,7 +117,7 @@ const SignUP = () => {
               <input
                 type="password"
                 placeholder="Your Password"
-                className="input input-bordered w-full max-w-xs"
+                className="input input-bordered input-secondary w-full max-w-xs"
                 {...register("password", {
                   required: {
                     value: true,
@@ -147,7 +154,7 @@ const SignUP = () => {
           <p>
             <small>
               Allready have an account?{" "}
-              <Link className="text-primary" to="/signup">
+              <Link className="text-primary" to="/login">
                 Please Login
               </Link>
             </small>
