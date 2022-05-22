@@ -11,7 +11,7 @@ const AvailableAppointment = ({date}) => {
     
     const formatttedDate = format(date, 'PP');
 
-    const {data: services, isLoading, refetch} = useQuery('available', ()=> fetch(`http://localhost:5000/available?date=${formatttedDate}`)
+    const {data: services, isLoading, refetch} = useQuery('available', ()=> fetch(`https://powerful-hollows-63277.herokuapp.com/available?date=${formatttedDate}`)
         .then(res=> res.json())
         )
         if(isLoading){
@@ -20,7 +20,7 @@ const AvailableAppointment = ({date}) => {
 
 
     // useEffect( ()=>{
-    //     fetch(`http://localhost:5000/available?date=${formatttedDate}`)
+    //     fetch(`https://powerful-hollows-63277.herokuapp.com/available?date=${formatttedDate}`)
     //     .then(res=> res.json())
     //     .then(data => setServices(data));
     // },[])
