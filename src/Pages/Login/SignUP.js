@@ -8,6 +8,7 @@ import auth from "../../firebase.init";
 import { useForm } from "react-hook-form";
 import Loading from "../Shared/Loading";
 import { Link, useNavigate } from "react-router-dom";
+import useToken from '../../hooks/useToken';
 // import { sendEmailVerification } from 'firebase/auth';
 
 const SignUP = () => {
@@ -20,12 +21,8 @@ const SignUP = () => {
   const [updateProfile, updating, updateError] = useUpdateProfile(auth); 
   const navigate = useNavigate(); 
 
-  useEffect( ()=>{
-    if (gUser || user) {
-      console.log("google sign in: ", user, gUser);
-      navigate('/appointment')
-    }
-  },[gUser, user, navigate])
+  const [token]= useToken(user || gUser);
+  
 
   if (loading || gLoading || updating) {
     return <Loading></Loading>;
@@ -38,6 +35,11 @@ const SignUP = () => {
         <small>{error?.message || gError?.message}</small>
       </p>
     );
+  }
+
+  if (token) {
+    navigate('/appointment')
+    console.log("google sign in: ", user, gUser);
   }
 
   
